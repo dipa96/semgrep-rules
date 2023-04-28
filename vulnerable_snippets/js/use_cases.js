@@ -4,7 +4,7 @@ const qs = window.location.search;
 const hash = window.location.hash;
 
 // vulnerable, constant pass into sinks
-document.write(qs);
+document.write(qs + asd);
 document.write(hash);
 
 // not vulnerable, no param inside sink
