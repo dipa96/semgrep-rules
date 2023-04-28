@@ -26,6 +26,7 @@ rules:
           - pattern: document.documentURI
           - pattern: document.baseURI
           - pattern: document.cookie
+          - pattern: JSON.parse
       - pattern-either:
       # Pattern di Funzione 1
         - patterns:
@@ -68,6 +69,7 @@ rules:
           - pattern: msSetImmediate(...)
           - pattern: document.write(...)
           - pattern: document.writeln(...)
+          - pattern: JSON.parse(...)
           # Sinks variant
           - pattern: document.domain = $PARAM
           - pattern: location = $PARAM
@@ -83,6 +85,7 @@ rules:
           - pattern: $ELEMENT.text = $PARAM
           - pattern: $ELEMENT.innerText = $PARAM
           - pattern: $ELEMENT.appendChild = $PARAM
+          - pattern: $ELEMENT.appendChild(...)
           - pattern: $ELEMENT.append = $PARAM
           - pattern: $ELEMENT.open(...)
           - pattern: $ELEMENT.insertAdjacentHTML(...)
