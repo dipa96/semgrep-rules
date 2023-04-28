@@ -1,0 +1,92 @@
+rules:
+  - id: input-to-unsafe-dom-param
+    message: |
+      dom dom dom, who is?
+    severity: ERROR
+    languages:
+      - JavaScript
+      - TypeScript
+    metadata:
+      authors:
+        - Donato Di Pasquale (@dipa996) (@ertataki) (@ddipa) 
+      category: security
+      references:
+        - https://owasp.org/www-community/attacks/DOM_Based_XSS
+    mode: taint
+
+    pattern-sources:
+      - patterns:
+        - pattern-either:
+        # Javascript Sources
+          - pattern: location
+          - pattern: window.location
+          - pattern: document.location
+          - pattern: document.URL
+          - pattern: window.name
+          - pattern: document.referrer
+          - pattern: document.documentURI
+          - pattern: document.baseURI
+          - pattern: document.cookie
+      - pattern-either:
+      # Nel caso una funzione richiama parametro che è passato dentro sources
+        - patterns:
+          - pattern-inside: |
+              function $FUNC(..., $PARAM, ...) {
+                ...
+              }
+          - pattern: $PARAM
+        - patterns:
+        # Se succede tutto direttamente in una funzione
+          - pattern-inside: |
+              function $FUNC(...) {
+                ...
+              }
+    # mamma mia come spingono i propagators fortissimi <3
+    pattern-propagators:
+    # Aggiunge parametro/valore all'elemento
+    - pattern: $S.push($E)
+      from: $E
+      to: $S
+    # Ritorna il parametro eliminato dall'elemento
+    - pattern: $S.shift($E)
+      from: $E
+      to: $S
+    # Ritorna l'elemento completo più il parametro passato
+    - pattern: $S.unshift($E)
+      from: $E
+      to: $S
+
+    pattern-sinks:
+      - patterns:
+        - pattern-either:
+          # Javascript Sinks
+          - pattern: eval(...)
+          - pattern: Function(...)
+          - pattern: execScript(...)
+          - pattern: setTimeout(...)
+          - pattern: setInterval(...)
+          - pattern: setImmediate(...)
+          - pattern: msSetImmediate(...)
+          - pattern: document.write(...)
+          - pattern: document.writeln(...)
+          - pattern: document.domain = $PARAM
+          # Quando viene utilizzato un metodo unsafe ed il valore è controllato da noi, genera troppi falsi positivi
+          - pattern: $ELEMENT.innerHTML = $PARAM
+          - pattern: $ELEMENT.outerHTML = $PARAM
+          - pattern: $ELEMENT.src = $PARAM
+          - pattern: $ELEMENT.textContent = $PARAM
+          - pattern: $ELEMENT.text = $PARAM
+          - pattern: $ELEMENT.innerText = $PARAM
+          - pattern: $ELEMENT.appendChild = $PARAM
+          - pattern: $ELEMENT.append = $PARAM
+          # JQuery Area, in realtà non c'è bisogno di specificare, l'ho fatto solo per ordinare meglio le sinks
+          - pattern: $(...)
+          - pattern: $JQ.$(...)
+          # - pattern: $JQ.constructor(...) # Ho capito a metà, non lo trovo in documentazione
+          - pattern: $JQ.parseHTML(...)
+          - pattern: $JQ.add($PARAM)
+          - pattern: $JQ.html($PARAM)
+          - pattern: $JQ.globalEval($PARAM)
+    # Non sono sicuro di voler lasciare i sanitizers
+    pattern-sanitizers:
+      - pattern: DOMPurify.sanitize(...)

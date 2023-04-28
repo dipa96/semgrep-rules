@@ -1,0 +1,11 @@
+# Molto codice Javascript è contenuto in pagine HTML, di seguito metodo per estrarlo
+# semgrep -c extract-html-to-javascript.yaml -c semgrep-rules.yaml unsafe-javascript.js
+# TODO: Creare regola semgrep per estrarre anche da asp,aspx,jsp,etc
+rules:
+- id: extract-html-to-javascript
+  mode: extract
+  languages:
+    - html
+  pattern: <script>$...SCRIPT</script>
+  extract: $...SCRIPT
+  dest-language: javascript
