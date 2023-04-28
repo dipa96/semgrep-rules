@@ -35,12 +35,12 @@ rules:
                 ...
               }
           - pattern: $PARAM
-        - patterns:
-        # Pattern di funzione 2
-          - pattern-inside: |
-              function $FUNC(...) {
-                ...
-              }
+        # - patterns:
+        # # Pattern di funzione 2
+        #   - pattern-inside: |
+        #       function $FUNC(...) {
+        #         ...
+        #       }
     # mamma mia come spingono i propagators fortissimi <3
     pattern-propagators:
     # Aggiunge parametro/valore all'elemento
