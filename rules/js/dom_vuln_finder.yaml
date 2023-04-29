@@ -35,12 +35,12 @@ rules:
                 ...
               }
           - pattern: $PARAM
-        # - patterns:
-        # # Pattern di funzione 2
-        #   - pattern-inside: |
-        #       function $FUNC(...) {
-        #         ...
-        #       }
+        - patterns:
+        # Pattern di funzione 2
+          - pattern-inside: |
+               function $FUNC(...) {
+                 ...
+               }
     # mamma mia come spingono i propagators fortissimi <3
     pattern-propagators:
     # Aggiunge parametro/valore all'elemento
@@ -115,8 +115,10 @@ rules:
           - pattern: $JQ.wrapInner(...)
           - pattern: $JQ.prop.innerHTML(...)
           - pattern: $JQ.prop.outerHTML(...)
-        
+        # Da migliorare
+        - pattern-not: $ELEMENT.innerText = "..."
+        - pattern-not: $ELEMENT.innerHTML += "..."
           
-    # Non sono sicuro di voler lasciare i sanitizers
+    # Sanitizers
     pattern-sanitizers:
       - pattern: DOMPurify.sanitize(...)
