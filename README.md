@@ -2,15 +2,32 @@
 
 Collection of rules for Static Application Security Testing (SAST) with SemGrep.
 
-## Challenges
+## Installation
 
-Collection of DOM XSS challenge positively solved by using semgrep rules.
+Setting up environment.
+
+```shell
+git clone https://github.com/dipa96/semgrep-rules
+cd semgrep-rules
+pip3 install semgrep
+```
 
 ## DOM XSS
 
-Various passed DOM XSS Challenge with SemGrep rules
+Various passed DOM XSS Challenge with SemGrep rules,
 
-### portswigger.net
+### Usage
+
+```shell
+cd semgrep-rules
+semgrep -c rules/js/extract_js_from_html.yaml -c rules/js/dom_vuln_finder.yaml vulnerable_snippets/js/*.js
+```
+
+### Challenges
+
+Collection of DOM XSS challenge positively solved by using semgrep rules.
+
+#### portswigger.net
 
 + [Reflected DOM XSS](https://portswigger.net/web-security/cross-site-scripting/dom-based/lab-dom-xss-reflected)
 + [DOM XSS in document.write sink using source location.search](https://portswigger.net/web-security/cross-site-scripting/dom-based/lab-document-write-sink)
@@ -19,11 +36,11 @@ Various passed DOM XSS Challenge with SemGrep rules
 + [DOM XSS in jQuery selector sink using a hashchange event](https://portswigger.net/web-security/cross-site-scripting/dom-based/lab-jquery-selector-hash-change-event)
 + [DOM XSS using web messages and JSON.parse](https://portswigger.net/web-security/dom-based/controlling-the-web-message-source/lab-dom-xss-using-web-messages-and-json-parse)
 
-### domxss.com
+#### domxss.com
 
 [domxss.com - Challenge ](http://www.domxss.com/domxss/01_Basics/00_simple_noHead.html)
 
-### domgo.at
+#### domgo.at
 
 [domgo.at - Challenge](https://domgo.at/cxss/intro)
 
