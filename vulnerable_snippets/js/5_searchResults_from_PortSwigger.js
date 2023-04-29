@@ -70,3 +70,12 @@ function search(path) {
     }
 }
 
+function falso_positivo(){
+var asd = document.createElement("div");
+asd.setAttribute("class", "is-linkback");
+var backToBlog = document.createElement("a");
+backToBlog.setAttribute("href", "/");
+backToBlog.innerText = "Back to Blog";
+asd.appendChild(backToBlog);
+blogList.appendChild(asd);
+}

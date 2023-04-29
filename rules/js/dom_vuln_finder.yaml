@@ -5,7 +5,6 @@ rules:
     severity: ERROR
     languages:
       - JavaScript
-      - TypeScript
     metadata:
       authors:
         - Donato Di Pasquale (@dipa996) (@ertataki) (@ddipa) 
@@ -14,9 +13,9 @@ rules:
         - https://owasp.org/www-community/attacks/DOM_Based_XSS
     mode: taint
     pattern-sources:
+    # A source is a JavaScript property that accepts data that is potentially attacker-controlled.
       - patterns:
         - pattern-either:
-        # Javascript Sources
           - pattern: location
           - pattern: window.location
           - pattern: document.location
@@ -27,8 +26,12 @@ rules:
           - pattern: document.baseURI
           - pattern: document.cookie
           - pattern: JSON.parse
+
       - pattern-either:
-      # Pattern di Funzione 1
+      # Patterns for functions
+        - patterns:
+          - pattern-inside: |
+                $ACTION($FUNC(...))  
         - patterns:
           - pattern-inside: |
               function $FUNC(..., $PARAM, ...) {
@@ -36,12 +39,13 @@ rules:
               }
           - pattern: $PARAM
         - patterns:
-        # Pattern di funzione 2
           - pattern-inside: |
                function $FUNC(...) {
                  ...
                }
-    # mamma mia come spingono i propagators fortissimi <3
+
+
+    # Propagators - SemGrep ()
     pattern-propagators:
     # Aggiunge parametro/valore all'elemento
     - pattern: $T.push($F)
@@ -56,10 +60,12 @@ rules:
       from: $F
       to: $T
 
+
     pattern-sinks:
+    # A sink is a potentially dangerous JavaScript function or DOM object that can cause undesirable effects if attacker-controlled data is passed to it
       - patterns:
         - pattern-either:
-          # Javascript Sinks
+        # Commons Sinks
           - pattern: eval(...)
           - pattern: Function(...)
           - pattern: execScript(...)
@@ -76,7 +82,7 @@ rules:
           - pattern: location.href = $PARAM
           - pattern: location.replace = $PARAM
           - pattern: location.assign = $PARAM
-          # Quando viene utilizzato un metodo unsafe ed il valore è controllato da noi, genera troppi falsi positivi
+          # Unsafe method/property
           - pattern: $ELEMENT.innerHTML = $PARAM
           - pattern: $ELEMENT.outerHTML = $PARAM
           - pattern: $ELEMENT.src = $PARAM
@@ -89,16 +95,14 @@ rules:
           - pattern: $ELEMENT.append = $PARAM
           - pattern: $ELEMENT.open(...)
           - pattern: $ELEMENT.insertAdjacentHTML(...)
-          # JQuery Area, in realtà non c'è bisogno di specificare, l'ho fatto solo per ordinare meglio le sinks
+          # JQuery Area
           - pattern: $(...)
           - pattern: $JQ.$(...)
-          # - pattern: $JQ.constructor(...) # Ho capito a metà, non lo trovo in documentazione
           - pattern: $JQ.parseHTML(...)
           - pattern: $JQ.add(...)
           - pattern: $JQ.html(...)
           - pattern: $JQ.globalEval(...)
           - pattern: $JQ.has(...)
-          # - pattern: $JQ.init(...) NotFound in Docs
           - pattern: $JQ.index(...)
           - pattern: $JQ.append(...)
           - pattern: $JQ.appendTo(...)
@@ -115,10 +119,13 @@ rules:
           - pattern: $JQ.wrapInner(...)
           - pattern: $JQ.prop.innerHTML(...)
           - pattern: $JQ.prop.outerHTML(...)
-        # Da migliorare
-        - pattern-not: $ELEMENT.innerText = "..."
-        - pattern-not: $ELEMENT.innerHTML += "..."
-          
+        
+        
+        # Avoid False Positive(FP)
+        - pattern-not: $ELEMENT.$PROPERTY = "..."
+        - pattern-not: $ELEMENT.$PROPERTY += "..."
+
+
     # Sanitizers
     pattern-sanitizers:
       - pattern: DOMPurify.sanitize(...)
