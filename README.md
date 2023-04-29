@@ -1,15 +1,18 @@
 # semgrep-rules
 
-Collection of rules for Static Application Security Testing (SAST) with SemGrep,
+Collection of rules for Static Application Security Testing (SAST) with SemGrep.
 
 ## Challenges
 
-Collections of challenges for testing SemGrep Rules,
+Collections of challenges for testing SemGrep Rules.
+
+## DOM XSS
+
+Various passed DOM XSS Challenge with SemGrep rules
 
 ### portswigger.net Challenge
 
-#### DOM XSS
-
++ [Reflected DOM XSS](https://portswigger.net/web-security/cross-site-scripting/dom-based/lab-dom-xss-reflected)
 + [DOM XSS in document.write sink using source location.search](https://portswigger.net/web-security/cross-site-scripting/dom-based/lab-document-write-sink)
 + [DOM XSS in document.write sink using source location.search inside a select element](https://portswigger.net/web-security/cross-site-scripting/dom-based/lab-document-write-sink-inside-select-element)
 + [DOM XSS in jQuery anchor href attribute sink using location.search source](https://portswigger.net/web-security/cross-site-scripting/dom-based/lab-jquery-href-attribute-sink)
@@ -18,19 +21,11 @@ Collections of challenges for testing SemGrep Rules,
 
 ### domxss.com Challenge
 
-#### DOM XSS
-
-[]()
-[]()
-[]()
+[domxss.com - Challenge ](http://www.domxss.com/domxss/01_Basics/00_simple_noHead.html)
 
 ### domgo.at Challenge
 
-#### DOM XSS
-
-[]()
-[]()
-[]()
+[domgo.at - Challenge](https://domgo.at/cxss/intro)
 
 ## TODO
 
