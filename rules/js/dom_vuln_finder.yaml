@@ -1,5 +1,5 @@
 rules:
-  - id: input-to-unsafe-dom-param
+  - id: dom_vuln_finder
     message: |
       dom dom dom, who is?
     severity: ERROR
