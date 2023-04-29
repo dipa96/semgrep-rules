@@ -78,4 +78,5 @@ backToBlog.setAttribute("href", "/");
 backToBlog.innerText = "Back to Blog";
 asd.appendChild(backToBlog);
 blogList.appendChild(asd);
+DOMPurify.sanitize(asd)
 }
