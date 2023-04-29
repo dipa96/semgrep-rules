@@ -25,3 +25,13 @@ let responseBody = xhr.responseText;
 let responeBodyObject = JSON.parse(responseBody);
 let msg = "Welcome <b>" + responeBodyObject.payload + "</b>!!";
 document.getElementById("msgboard").innerHTML = msg;
+
+// 4
+let ws = new WebSocket(webSocketUrl);
+ws.onmessage = function (evt) {
+    
+    let rawMsg = evt.data;
+    let msgJson = JSON.parse(rawMsg);
+    let msg = "Welcome <b>" + msgJson.payload + "</b>!!";
+    document.getElementById("msgboard").innerHTML = msg;
+};
