@@ -26,6 +26,7 @@ rules:
           - pattern: document.baseURI
           - pattern: document.cookie
           - pattern: JSON.parse
+          - pattern: $PARAM.data
 
       - pattern-either:
       # Patterns for functions

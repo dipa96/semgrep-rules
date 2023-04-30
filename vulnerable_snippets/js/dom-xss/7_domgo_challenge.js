@@ -35,3 +35,18 @@ ws.onmessage = function (evt) {
     let msg = "Welcome <b>" + msgJson.payload + "</b>!!";
     document.getElementById("msgboard").innerHTML = msg;
 };
+
+// 5
+window.onmessage = function (evt) {
+    let msgObj = evt.data;
+    let msg = "Welcome <b>" + msgObj.payload + "</b>!!";
+    document.getElementById("msgboard").innerHTML = msg;
+};
+
+// 5 DOM PURIFY
+window.onmessage = function (evt) {
+    let msgObj = evt.data;
+    let msg = "Welcome <b>" + msgObj.payload + "</b>!!";
+    let clean = DOMPurify.sanitize(msg);
+    document.getElementById("msgboard").innerHTML = clean;
+};
