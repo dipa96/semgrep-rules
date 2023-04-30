@@ -43,10 +43,25 @@ window.onmessage = function (evt) {
     document.getElementById("msgboard").innerHTML = msg;
 };
 
-// 5 DOM PURIFY
+// 5 DOM PURIFY SANITIZED
 window.onmessage = function (evt) {
     let msgObj = evt.data;
     let msg = "Welcome <b>" + msgObj.payload + "</b>!!";
     let clean = DOMPurify.sanitize(msg);
     document.getElementById("msgboard").innerHTML = clean;
 };
+
+// 6 
+function random(){
+let payloadValue = localStorage.getItem("payload", payload);
+let hack = "Welcome " + payload + "!!";
+document.getElementById("msgboard").innerHTML = hack;
+}
+
+// 7
+// Adding false positive, how to avoid them?
+// let hash1 = location.hash;
+let hashValueToUse = hash1.length > 1 ? unescape(hash1.substr(1)) : hash1;
+hashValueToUse = hashValueToUse.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+let msg1 = "<a href='#user=" + hashValueToUse + "'>Welcome</a>!!";
+document.getElementById("msgboard").innerHTML = msg1;
