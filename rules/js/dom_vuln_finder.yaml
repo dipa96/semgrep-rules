@@ -25,10 +25,11 @@ rules:
           - pattern: document.documentURI
           - pattern: document.baseURI
           - pattern: document.cookie
-          - pattern: JSON.parse
-          - pattern: $OBJECT.data
           - pattern: localStorage.getItem
           - pattern: sessionStorage.getItem
+          # Check better below
+          - pattern: JSON.parse
+          - pattern: $OBJECT.data
 
       - pattern-either:
       # Patterns for functions

