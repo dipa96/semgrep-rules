@@ -46,6 +46,10 @@ Collection of DOM XSS challenge positively solved by using semgrep rules.
 
 [domgo.at - Challenge](https://domgo.at/cxss/intro)
 
+##### google.com
+
+[Firing-range](https://public-firing-range.appspot.com/dom/index.html)
+
 ## TODO
 
 + [HackTricks DOM XSS Sinks & Sources](https://book.hacktricks.xyz/pentesting-web/xss-cross-site-scripting/dom-xss)
