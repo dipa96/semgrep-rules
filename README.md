@@ -25,6 +25,7 @@ cd semgrep-rules
 semgrep -c rules/js/dom_vuln_finder.yaml vulnerable_snippets/js/dom-xss/*.js
 semgrep -c rules/js/extract_js_from_html.yaml -c rules/js/dom_vuln_finder.yaml vulnerable_snippets/js/dom-xss/*.html
 ```
+
 ##### Sanitization
 
 + [owasp.org](https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html)
