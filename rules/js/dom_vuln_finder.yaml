@@ -19,7 +19,7 @@ rules:
             - pattern-inside: |
                 $METHOD($FUNC(...,$PARAM,...))
             - pattern: $PARAM
-
+            
             - pattern-inside: |
                 $METHOD($FUNC()) {
                   ...
@@ -104,7 +104,8 @@ rules:
           - pattern: $ELEMENT.open(...)
           - pattern: $ELEMENT.insertAdjacentHTML(...)
           # JQuery Area
-          - pattern: $(...)
+          # False positive ++ , How to create a better rule?
+          # - pattern: $(...)
           - pattern: $JQ.$(...)
           - pattern: $JQ.parseHTML(...)
           - pattern: $JQ.add(...)
@@ -132,7 +133,7 @@ rules:
         # Avoid False Positive(FP)
         - pattern-not: $ELEMENT.$PROPERTY = "..."
         - pattern-not: $ELEMENT.$PROPERTY += "..."
-
+        - pattern-not: $ELEMENT.$PROPERTY("...")
 
     # Sanitizers
     pattern-sanitizers:
