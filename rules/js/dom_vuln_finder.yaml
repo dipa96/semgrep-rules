@@ -1,7 +1,7 @@
 rules:
-  - id: dom_vuln_finder
+  - id: dom_vuln_finder 
     message: |
-      dom dom dom, who is?
+      dom dom dom, who is? $PARAM
     severity: ERROR
     languages:
       - JavaScript
