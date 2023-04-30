@@ -14,7 +14,22 @@ rules:
     mode: taint
     pattern-sources:
     # A source is a JavaScript property that accepts data that is potentially attacker-controlled.
-      - patterns:
+        - pattern-either:
+        # Patterns for functions
+            - patterns:
+                - pattern-inside: |
+                      $ACTION($FUNC(...))  
+            - patterns:
+                - pattern-inside: |
+                    function $FUNC(..., $PARAM, ...) {
+                      ...
+                    }
+                - pattern: $PARAM
+            - patterns:
+                - pattern-inside: |
+                    function $FUNC(...) {
+                      ...
+                    }
         - pattern-either:
           - pattern: location
           - pattern: window.location
@@ -30,23 +45,6 @@ rules:
           # Check better below
           - pattern: JSON.parse
           - pattern: $OBJECT.data
-
-      - pattern-either:
-      # Patterns for functions
-        - patterns:
-          - pattern-inside: |
-                $ACTION($FUNC(...))  
-        - patterns:
-          - pattern-inside: |
-              function $FUNC(..., $PARAM, ...) {
-                ...
-              }
-          - pattern: $PARAM
-        - patterns:
-          - pattern-inside: |
-               function $FUNC(...) {
-                 ...
-               }
 
 
     # Propagators - SemGrep ()
