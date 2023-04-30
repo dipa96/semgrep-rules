@@ -22,7 +22,8 @@ DOM-based XSS vulnerabilities usually arise when JavaScript takes data from an a
 
 ```shell
 cd semgrep-rules
-semgrep -c rules/js/extract_js_from_html.yaml -c rules/js/dom_vuln_finder.yaml vulnerable_snippets/js/*.js
+semgrep -c rules/js/dom_vuln_finder.yaml vulnerable_snippets/js/dom-xss/*.js
+semgrep -c rules/js/extract_js_from_html.yaml -c rules/js/dom_vuln_finder.yaml vulnerable_snippets/js/dom-xss/*.html
 ```
 
 #### Challenges
