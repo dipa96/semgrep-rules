@@ -60,17 +60,10 @@ rules:
           - pattern: document.baseURI
           - pattern: localStorage.getItem
           - pattern: sessionStorage.getItem
-          # Check next 4
-          - pattern: history.pushState
-          - pattern: history.replaceState
-          - pattern: database
-          - pattern: IndexedDB
           # Make sense JSON.parse in sources?
           - pattern: JSON.parse
           - pattern: $OBJECT.data
-          # - pattern: $DOMELEMENT.open(...)
           
-
 
     # Propagators - SemGrep ()
     pattern-propagators:
@@ -116,6 +109,19 @@ rules:
           - pattern: $DOMELEMENT.evaluate(...)
           # The postMessage() method for sending web messages can lead to vulnerabilities if the event listener for receiving messages handles the incoming data in an unsafe way.
           - pattern: postMessage(...)
+          # May cause FP but can found OpenRedirect too.
+          - pattern: $DOMELEMENT.open(...)
+          # mmm
+          - pattern: $DOMELEMENT.send(...)
+          - pattern: sessionStorage.setItem
+          - pattern: localStorage.setItem
+          - pattern: constructor()
+          # Check next
+          - pattern: history.pushState
+          - pattern: history.replaceState
+          - pattern: database
+          - pattern: IndexedDB
+          - pattern: $DOMELEMENT.open(...)
           #
           - pattern: setTimeout(...)
           - pattern: setInterval(...)
@@ -129,7 +135,7 @@ rules:
           - pattern: document.domain = $PARAM
           - pattern: location = $PARAM
           - pattern: location.href = $PARAM
-          - pattern: location.replace(...)
+          - pattern: $DOMELEMENT.replace(...)
           - pattern: location.assign(...)
           # Unsafe method/property
           - pattern: $DOMELEMENT.innerHTML = $PARAM
@@ -142,8 +148,6 @@ rules:
           - pattern: $DOMELEMENT.appendChild = $PARAM
           - pattern: $DOMELEMENT.appendChild(...)
           - pattern: $DOMELEMENT.append = $PARAM
-          # May cause FP but can found OpenRedirect too.
-          - pattern: $DOMELEMENT.open(...)
           - pattern: $DOMELEMENT.insertAdjacentHTML(...)
           # JQuery Area
           # May False Positive(FP) with JQuery Selector , How to create a better rule?
@@ -154,6 +158,7 @@ rules:
           - pattern: $JQ.parseHTML(...)
           - pattern: $JQ.add(...)
           - pattern: $JQ.html(...)
+          - pattern: $.globalEval(...)
           - pattern: $JQ.globalEval(...)
           - pattern: $JQ.has(...)
           - pattern: $JQ.index(...)
@@ -173,7 +178,7 @@ rules:
           - pattern: $JQ.prop.innerHTML(...)
           - pattern: $JQ.prop.outerHTML(...)
         
-        
+
         # Avoid False Positive(FP)
         - pattern-not: $("...")
         - pattern-not: .$PROPERTY = "..."
