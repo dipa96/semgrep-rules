@@ -1,3 +1,5 @@
+// Ran 2 rules on 1 file: 5 findings.
+
 // https://portswigger.net/web-security/cross-site-scripting/dom-based/lab-document-write-sink
 function trackSearch(query) {
       document.write('<img src="/resources/images/tracker.gif?searchTerms='+query+'">');
@@ -40,6 +42,7 @@ function trackSearch(query) {
 
   // https://portswigger.net/web-security/dom-based/controlling-the-web-message-source/lab-dom-xss-using-web-messages-and-json-parse
   window.addEventListener('message', function(e) {
+    // LINE 44: Instrumentation semgrep for findings below pattern? 
     var iframe = document.createElement('iframe'), ACMEplayer = {element: iframe}, d;
     document.body.appendChild(iframe);
     try {

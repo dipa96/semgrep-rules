@@ -1,3 +1,5 @@
+// Ran 2 rules on 1 file: 9 findings.
+// A Lot of False Positive
 function loadComments(postCommentPath) {
     let xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
@@ -73,4 +75,7 @@ function loadComments(postCommentPath) {
         }
     }
 };
-
+// random error func
+function ttt(asd){
+    document.write = "location.search"
+}

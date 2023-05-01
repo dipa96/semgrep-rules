@@ -1,3 +1,5 @@
+// A lot of FP
+// Ran 2 rules on 1 file: 14 findings.
 // https://portswigger.net/web-security/cross-site-scripting/dom-based/lab-dom-xss-reflected
 function search(path) {
     var xhr = new XMLHttpRequest();

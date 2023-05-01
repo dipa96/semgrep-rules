@@ -28,13 +28,19 @@ rules:
               - pattern-inside: |
                   function $FUNC(..., $PARAM, ...) {
                     ...
-                  }
+                  };
               - pattern: $PARAM
             - patterns:
               - pattern-inside: |
                   function $FUNC(...) {
-                  ...
+                    ...
                   }
+            # Need to create patterns for listener
+            # - patterns:
+            #   - pattern-inside: |
+            #       window.$LISTENER('message', function(e){
+            #         ...
+            #       }
 
         - pattern-either:
           - pattern: location
@@ -49,7 +55,7 @@ rules:
           - pattern: localStorage.getItem
           - pattern: sessionStorage.getItem
           # Make sense JSON.parse in sources?
-          # - pattern: JSON.parse
+          - pattern: JSON.parse
           - pattern: $OBJECT.data
           
 
@@ -66,6 +72,10 @@ rules:
       to: $T
     #  The unshift() method adds the specified elements to the beginning of an array and returns the new length of the array.
     - pattern: $T.unshift($F)
+      from: $F
+      to: $T
+    # The join() method creates and returns a new string by concatenating all of the elements in an array
+    - pattern: $T.join($F)
       from: $F
       to: $T
 
@@ -103,7 +113,7 @@ rules:
           - pattern: $ELEMENT.appendChild = $PARAM
           - pattern: $ELEMENT.appendChild(...)
           - pattern: $ELEMENT.append = $PARAM
-          - pattern: $ELEMENT.open(...)
+          # - pattern: $ELEMENT.open(...)
           - pattern: $ELEMENT.insertAdjacentHTML(...)
           # JQuery Area
           # May False Positive(FP) with JQuery Selector , How to create a better rule?
@@ -133,9 +143,11 @@ rules:
         
         
         # Avoid False Positive(FP)
+        - pattern-not: $("...")
         - pattern-not: $ELEMENT.$PROPERTY = "..."
         - pattern-not: $ELEMENT.$PROPERTY += "..."
         - pattern-not: $ELEMENT.$PROPERTY("...")
+        
 
     # Sanitizers
     pattern-sanitizers:

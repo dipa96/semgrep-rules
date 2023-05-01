@@ -1,3 +1,5 @@
+// Ran 2 rules on 1 file: 8 findings.
+// 1-2 FP
 //https://domgo.at/cxss/intro
 
 // 1
