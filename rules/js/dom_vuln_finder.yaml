@@ -48,8 +48,8 @@ rules:
           - pattern: document.cookie
           - pattern: localStorage.getItem
           - pattern: sessionStorage.getItem
-          # Check better below
-          - pattern: JSON.parse
+          # Make sense JSON.parse in sources?
+          # - pattern: JSON.parse
           - pattern: $OBJECT.data
           
 
@@ -84,13 +84,14 @@ rules:
           - pattern: msSetImmediate(...)
           - pattern: document.write(...)
           - pattern: document.writeln(...)
-          - pattern: JSON.parse(...)
+          # JSON.parse may cause false positives (FP) and not perform very well in sinks area
+          # - pattern: JSON.parse(...)
           # Sinks variant
           - pattern: document.domain = $PARAM
           - pattern: location = $PARAM
           - pattern: location.href = $PARAM
-          - pattern: location.replace = $PARAM
-          - pattern: location.assign = $PARAM
+          - pattern: location.replace(...)
+          - pattern: location.assign(...)
           # Unsafe method/property
           - pattern: $ELEMENT.innerHTML = $PARAM
           - pattern: $ELEMENT.outerHTML = $PARAM
@@ -105,7 +106,7 @@ rules:
           - pattern: $ELEMENT.open(...)
           - pattern: $ELEMENT.insertAdjacentHTML(...)
           # JQuery Area
-          # False positive with JQuery Selector , How to create a better rule?
+          # May False Positive(FP) with JQuery Selector , How to create a better rule?
           - pattern: $(...)
           - pattern: $JQ.$(...)
           - pattern: $JQ.parseHTML(...)
