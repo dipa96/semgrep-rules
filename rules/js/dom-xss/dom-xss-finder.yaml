@@ -1,7 +1,8 @@
+# This rule searches for a JavaScript source within the codebase and verifies if controllable user input passes through with any JavaScript sinks.
 rules:
   - id: dom-xss-finder 
     message: |
-      dom dom dom, who is?
+      A potential user-input controlled parameter passing in a JavaScript sink was found.
     severity: ERROR
     languages:
       - JavaScript
@@ -11,11 +12,13 @@ rules:
       category: security
       references:
         - https://owasp.org/www-community/attacks/DOM_Based_XSS
+    # This data-flow analysis feature tracks the flow of untrusted (tainted) data throughout the body of a function or method. Tainted data originate from tainted sources.
     mode: taint
     pattern-sources:
     # A source is a JavaScript property that accepts data that is potentially attacker-controlled.
         - pattern-either:
             - patterns:
+              # Create pattern for match functions.
               - pattern-inside: |
                   $METHOD($FUNC(...,$PARAM,...))
               - pattern: $PARAM
@@ -42,6 +45,7 @@ rules:
             #         ...
             #       }
 
+        # List of known JavaScript Sources. 
         - pattern-either:
           - pattern: location
           - pattern: window.location
@@ -52,11 +56,19 @@ rules:
           - pattern: document.documentURI
           - pattern: document.baseURI
           - pattern: document.cookie
+          - pattern: document.URLUnencoded
+          - pattern: document.baseURI
           - pattern: localStorage.getItem
           - pattern: sessionStorage.getItem
+          # Check next 4
+          - pattern: history.pushState
+          - pattern: history.replaceState
+          - pattern: database
+          - pattern: IndexedDB
           # Make sense JSON.parse in sources?
           - pattern: JSON.parse
           - pattern: $OBJECT.data
+          # - pattern: $DOMELEMENT.open(...)
           
 
 
@@ -88,6 +100,23 @@ rules:
           - pattern: eval(...)
           - pattern: Function(...)
           - pattern: execScript(...)
+          # 4 check after
+          # - pattern: execCommand(...)
+          - pattern: createContextualFragment(...)
+          # obsolete
+          - pattern: generateCRMFRequest(...)
+          - pattern: readAsArrayBuffer(...)
+          - pattern: readAsBinaryString(...)
+          - pattern: readAsDataURL(...)
+          - pattern: readAsText(...)
+          - pattern: readAsFile(...)
+          - pattern: getFile(...)
+          - pattern: $DOMELEMENT.href = $PARAM
+          - pattern: $DOMELEMENT.action = $PARAM
+          - pattern: $DOMELEMENT.evaluate(...)
+          # The postMessage() method for sending web messages can lead to vulnerabilities if the event listener for receiving messages handles the incoming data in an unsafe way.
+          - pattern: postMessage(...)
+          #
           - pattern: setTimeout(...)
           - pattern: setInterval(...)
           - pattern: setImmediate(...)
@@ -103,22 +132,25 @@ rules:
           - pattern: location.replace(...)
           - pattern: location.assign(...)
           # Unsafe method/property
-          - pattern: $ELEMENT.innerHTML = $PARAM
-          - pattern: $ELEMENT.outerHTML = $PARAM
-          - pattern: $ELEMENT.src = $PARAM
-          - pattern: $ELEMENT.srcdoc = $PARAM
-          - pattern: $ELEMENT.textContent = $PARAM
-          - pattern: $ELEMENT.text = $PARAM
-          - pattern: $ELEMENT.innerText = $PARAM
-          - pattern: $ELEMENT.appendChild = $PARAM
-          - pattern: $ELEMENT.appendChild(...)
-          - pattern: $ELEMENT.append = $PARAM
-          # - pattern: $ELEMENT.open(...)
-          - pattern: $ELEMENT.insertAdjacentHTML(...)
+          - pattern: $DOMELEMENT.innerHTML = $PARAM
+          - pattern: $DOMELEMENT.outerHTML = $PARAM
+          - pattern: $DOMELEMENT.src = $PARAM
+          - pattern: $DOMELEMENT.srcdoc = $PARAM
+          - pattern: $DOMELEMENT.textContent = $PARAM
+          - pattern: $DOMELEMENT.text = $PARAM
+          - pattern: $DOMELEMENT.innerText = $PARAM
+          - pattern: $DOMELEMENT.appendChild = $PARAM
+          - pattern: $DOMELEMENT.appendChild(...)
+          - pattern: $DOMELEMENT.append = $PARAM
+          # May cause FP but can found OpenRedirect too.
+          - pattern: $DOMELEMENT.open(...)
+          - pattern: $DOMELEMENT.insertAdjacentHTML(...)
           # JQuery Area
           # May False Positive(FP) with JQuery Selector , How to create a better rule?
           - pattern: $(...)
+          - pattern: $.ajax(...)
           - pattern: $JQ.$(...)
+          - pattern: $JQ.ajax(...)
           - pattern: $JQ.parseHTML(...)
           - pattern: $JQ.add(...)
           - pattern: $JQ.html(...)
@@ -144,9 +176,11 @@ rules:
         
         # Avoid False Positive(FP)
         - pattern-not: $("...")
-        - pattern-not: $ELEMENT.$PROPERTY = "..."
-        - pattern-not: $ELEMENT.$PROPERTY += "..."
-        - pattern-not: $ELEMENT.$PROPERTY("...")
+        - pattern-not: .$PROPERTY = "..."
+        - pattern-not: .$PROPERTY += "..."
+        - pattern-not: $DOMELEMENT.$PROPERTY = "..."
+        - pattern-not: $DOMELEMENT.$PROPERTY += "..."
+        - pattern-not: $DOMELEMENT.$PROPERTY("...")
         
 
     # Sanitizers
