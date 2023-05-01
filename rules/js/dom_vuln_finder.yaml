@@ -15,26 +15,26 @@ rules:
     pattern-sources:
     # A source is a JavaScript property that accepts data that is potentially attacker-controlled.
         - pattern-either:
-
-            - pattern-inside: |
-                $METHOD($FUNC(...,$PARAM,...))
-            - pattern: $PARAM
-            
-            - pattern-inside: |
-                $METHOD($FUNC()) {
+            - patterns:
+              - pattern-inside: |
+                  $METHOD($FUNC(...,$PARAM,...))
+              - pattern: $PARAM
+            - patterns:
+              - pattern-inside: |
+                  $METHOD($FUNC()) {
+                    ...
+                  }
+            - patterns:
+              - pattern-inside: |
+                  function $FUNC(..., $PARAM, ...) {
+                    ...
+                  }
+              - pattern: $PARAM
+            - patterns:
+              - pattern-inside: |
+                  function $FUNC(...) {
                   ...
-                }
-
-            - pattern-inside: |
-                function $FUNC(..., $PARAM, ...) {
-                  ...
-                }
-            - pattern: $PARAM
-
-            - pattern-inside: |
-                function $FUNC(...) {
-                ...
-                }
+                  }
 
         - pattern-either:
           - pattern: location
@@ -51,6 +51,7 @@ rules:
           # Check better below
           - pattern: JSON.parse
           - pattern: $OBJECT.data
+          
 
 
     # Propagators - SemGrep ()
