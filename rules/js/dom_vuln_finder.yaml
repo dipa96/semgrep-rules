@@ -105,8 +105,8 @@ rules:
           - pattern: $ELEMENT.open(...)
           - pattern: $ELEMENT.insertAdjacentHTML(...)
           # JQuery Area
-          # False positive ++ , How to create a better rule?
-          # - pattern: $(...)
+          # False positive with JQuery Selector , How to create a better rule?
+          - pattern: $(...)
           - pattern: $JQ.$(...)
           - pattern: $JQ.parseHTML(...)
           - pattern: $JQ.add(...)
