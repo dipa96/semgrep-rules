@@ -1,5 +1,5 @@
 rules:
-  - id: dom_vuln_finder 
+  - id: dom-xss-finder 
     message: |
       dom dom dom, who is?
     severity: ERROR
