@@ -1,0 +1,18 @@
+<html>
+  <head><title>Toxic DOM</title></head>
+  <body>
+    <script>
+      var postMessageHandler = function(msg) {
+  var content = msg.data;
+  var msgObj = eval(content);
+
+  if (msgObj.isActive) {
+    document.write("PostMessage arrived!");
+  }
+}
+
+window.addEventListener('message', postMessageHandler, false);
+
+    </script>
+  </body>
+</html>

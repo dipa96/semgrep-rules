@@ -1,0 +1,16 @@
+<html>
+  <head><title>Toxic DOM</title></head>
+  <body>
+    <script>
+      var postMessageHandler = function(msg) {
+  var content = JSON.parse(msg.data);
+  var div = document.createElement('div');
+  div.innerHTML = content.html;
+  document.documentElement.appendChild(div);
+};
+
+window.addEventListener('message', postMessageHandler, false);
+
+    </script>
+  </body>
+</html>

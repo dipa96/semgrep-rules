@@ -1,0 +1,19 @@
+if (!sessionStorage.badValue) {
+  sessionStorage.badValue = Math.random();
+}
+
+var payload = sessionStorage.badValue;
+
+setTimeout(function() {
+  trigger(sessionStorage.badValue); // Using the async trigger.
+
+  // Clean up the sessionStorage to avoid side-effects on subsequent tests.
+  sessionStorage.clear();
+}, 10)
+// Sync trigger.
+document.write(payload);
+
+// Async trigger.
+function trigger(payload) {
+  document.write(payload);
+}

@@ -1,0 +1,14 @@
+<html>
+  <head><title>Toxic DOM</title></head>
+  <body>
+    <script>
+      var postMessageHandler = function(msg) {
+  if (msg.origin.includes('www.google.com')) {
+    eval(msg.data);
+  }
+}
+
+window.addEventListener('message', postMessageHandler, false);
+    </script>
+  </body>
+</html>

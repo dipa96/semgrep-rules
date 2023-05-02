@@ -181,8 +181,8 @@ rules:
 
         # Avoid False Positive(FP)
         - pattern-not: $("...")
-        - pattern-not: .$PROPERTY = "..."
-        - pattern-not: .$PROPERTY += "..."
+        # - pattern-not: .$PROPERTY = "..."
+        # - pattern-not: .$PROPERTY += "..."
         - pattern-not: $DOMELEMENT.$PROPERTY = "..."
         - pattern-not: $DOMELEMENT.$PROPERTY += "..."
         - pattern-not: $DOMELEMENT.$PROPERTY("...")

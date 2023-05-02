@@ -1,0 +1,18 @@
+if (!localStorage['badValue']) {
+  localStorage['badValue'] = Math.random();
+}
+var payload = localStorage['badValue'];
+
+setTimeout(function() {
+  trigger(localStorage['badValue']); // Using the async trigger.
+
+  // Clean up the localStorage to avoid causing side-effect on subsequent tests.
+  localStorage.clear();
+}, 10);
+// Sync trigger.
+eval(payload);
+
+// Async trigger.
+function trigger(payload) {
+  eval(payload);
+};

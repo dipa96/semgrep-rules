@@ -1,0 +1,28 @@
+<html>
+  <head><title>Toxic DOM</title></head>
+  <body>
+    <script>
+      if (document.referrer == "") {
+  // If the referrer is not set, we set the referrer by reloading the page.
+  location.href = location.href;
+} else {
+  var payload = document.referrer;
+
+  setTimeout(function() {
+    trigger(document.referrer);
+  }, 10);
+}
+var div = document.createElement('div');
+document.documentElement.appendChild(div);
+
+// Sync trigger.
+div.innerHTML = payload;
+
+// Async trigger.
+function trigger(payload) {
+  div.innerHTML = payload;
+};
+
+    </script>
+  </body>
+</html>

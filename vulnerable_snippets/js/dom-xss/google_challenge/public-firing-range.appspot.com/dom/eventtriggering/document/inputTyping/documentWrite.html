@@ -1,0 +1,36 @@
+<html>
+  <head><title>Toxic DOM</title></head>
+  <body>
+    <script>
+      function deferredPayload() {
+  // Sync trigger.
+document.write(payload);
+
+// Async trigger.
+function trigger(payload) {
+  document.write(payload);
+}
+}// Trigger XSS by waiting for typing events / watch for change on an input field.
+
+var input = document.createElement('input');
+input.setAttribute('type', 'text');
+
+var payload = '';
+function xssIt(e) {
+  payload = e.target.value;
+  deferredPayload();
+}
+
+input.addEventListener('keyup', xssIt);
+input.addEventListener('change', xssIt);
+
+document.body.appendChild(input);// Sync trigger.
+document.write(payload);
+
+// Async trigger.
+function trigger(payload) {
+  document.write(payload);
+}
+    </script>
+  </body>
+</html>
