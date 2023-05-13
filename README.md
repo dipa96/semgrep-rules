@@ -1,6 +1,6 @@
 # semgrep-rules
 
-Collection of rules for Static Application Security Testing (SAST) with SemGrep.
+Collection of rules for Static Application Security Testing (SAST) with [Semgrep](https://semgrep.dev/).
 
 ## Installation
 
