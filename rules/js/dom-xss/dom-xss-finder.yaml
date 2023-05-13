@@ -111,7 +111,7 @@ rules:
           - pattern: postMessage(...)
           # May cause FP but can found OpenRedirect too.
           - pattern: $DOMELEMENT.open(...)
-          # mmm
+          # check
           - pattern: $DOMELEMENT.send(...)
           - pattern: sessionStorage.setItem
           - pattern: localStorage.setItem
