@@ -7,9 +7,9 @@ Collection of rules for Static Application Security Testing (SAST) with SemGrep.
 Setting up environment.
 
 ```shell
+pip3 install semgrep
 git clone https://github.com/dipa96/semgrep-rules
 cd semgrep-rules
-pip3 install semgrep
 ```
 
 ## Vulnerabilities
