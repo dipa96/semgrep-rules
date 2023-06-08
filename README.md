@@ -22,7 +22,7 @@ SQL injection (SQLi) is a web security vulnerability that allows an attacker to 
 
 #### Usage
 
-Together with @mrnfrancesco we discussed the creation of semgrep rules at [Come to Code 2022](https://www.cometocode.it/) , for more information we created an adhoc repository. It can be found here: [GreedyForSQLi](https://github.com/mrnfrancesco/GreedyForSQLi)
+Together with [@mrnfrancesco](https://github.com/mrnfrancesco) we discussed the creation of Semgrep rules at [Come to Code 2022](https://www.cometocode.it/) , for more information we created an adhoc repository. It can be found here: [GreedyForSQLi](https://github.com/mrnfrancesco/GreedyForSQLi)
 
 ### DOM
 
