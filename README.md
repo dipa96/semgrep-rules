@@ -33,20 +33,3 @@ semgrep -c rules/js/dom-xss/dom-xss-finder.yaml vulnerable_snippets/js/dom-xss/*
 ```shell
 semgrep -c rules/js/extract_js_from_html.yaml -c rules/js/dom-xss/dom-xss-finder.yaml vulnerable_snippets/js/dom-xss/*.html
 ```
-
-##### Sanitization
-
-+ [owasp.org](https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html)
-+ [DOMPurify](https://github.com/cure53/DOMPurify)
-
-#### Challenges
-
-Collection of DOM XSS challenge positively solved by using semgrep rules.
-
-[portswigger.net_DOM_XSS](https://portswigger.net/web-security/cross-site-scripting/dom-based)
-
-[domxss.com_Challenge](http://www.domxss.com/domxss/01_Basics/00_simple_noHead.html)
-
-[domgo.at_Challenge](https://domgo.at/cxss/intro)
-
-[google.com_Firing-range](https://public-firing-range.appspot.com/dom/index.html)
