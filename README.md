@@ -25,11 +25,11 @@ DOM-based XSS vulnerabilities usually arise when JavaScript takes data from an a
 **Use case**: Search for DOM XSS in **JavaScript** files.
 
 ```shell
-semgrep -c rules/js/dom-xss/dom-xss-finder.yaml vulnerable_snippets/js/dom-xss/*.js
+semgrep -c rules/js/dom-xss/dom-xss-finder.yaml /vulns/js/dom/xss/*.js
 ```
 
 **Use case**: Search for DOM XSS in **HTML** pages.
 
 ```shell
-semgrep -c rules/js/extract_js_from_html.yaml -c rules/js/dom-xss/dom-xss-finder.yaml vulnerable_snippets/js/dom-xss/*.html
+semgrep -c rules/js/extract_js_from_html.yaml -c /vulns/js/dom/xss/dom-xss-finder.yaml /vulns/js/dom/xss/*.html
 ```
